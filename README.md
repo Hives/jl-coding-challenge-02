@@ -15,4 +15,4 @@ recursive function to achieve this. I think you could probably do it using
 My `.getPrices()` method is an extension function on `String`. Is that a good
 idea? Should I limit it to a `Label` class? Or maybe it doesn't matter because
 it's private so it can't be used in any other context, and I know it's always
-going to called on a sensible receiver?
+going to be called on a sensible receiver?
