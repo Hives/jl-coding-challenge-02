@@ -1,7 +1,7 @@
 fun fixPriceLabel(label: String): String =
     label.getPrices()
         .pairWithFloatRepresentations()
-        .filterPrices()
+        .removeInvalidPrices()
         .formatToString()
 
 private fun String.getPrices() =
@@ -11,7 +11,7 @@ private fun String.getPrices() =
 private fun List<String>.pairWithFloatRepresentations() =
     this.map { Price(it, it.toFloat()) }
 
-private tailrec fun List<Price>.filterPrices(index: Int = 0): List<Price> {
+private tailrec fun List<Price>.removeInvalidPrices(index: Int = 0): List<Price> {
     if (index == this.size) return this
 
     val maxSubsequentPrice = this.filterIndexed { i, _ -> i > index }
@@ -19,9 +19,9 @@ private tailrec fun List<Price>.filterPrices(index: Int = 0): List<Price> {
         .max()
 
     if (maxSubsequentPrice != null && this[index].floatValue <= maxSubsequentPrice) {
-        return this.filterIndexed { i, _ -> i != index }.filterPrices(index)
+        return this.filterIndexed { i, _ -> i != index }.removeInvalidPrices(index)
     } else {
-        return this.filterPrices(index + 1)
+        return this.removeInvalidPrices(index + 1)
     }
 
 }
