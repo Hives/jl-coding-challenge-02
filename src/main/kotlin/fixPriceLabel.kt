@@ -1,12 +1,12 @@
 fun fixPriceLabel(label: String): String =
     label.getPrices()
-        .pairWithFloatRepresentations()
         .removeInvalidPrices()
         .formatToString()
 
 private fun String.getPrices() =
     this.split(",")
         .map { it.split("£").last() }
+        .pairWithFloatRepresentations()
 
 private fun List<String>.pairWithFloatRepresentations() =
     this.map { Price(it, it.toFloat()) }
